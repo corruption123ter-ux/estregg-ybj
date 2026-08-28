@@ -1,2 +1,33 @@
-# estreg-ybj
-A terminal-based space exploration game
+# estregg-ybj
+
+A terminal-based Python game built with `curses`. Run it directly inside your Linux environment!
+
+---
+
+## 🛠️ Requirements & Installation
+
+To run `estregg-ybj`, you need **Python 3** and **pipx** installed on your system.
+
+### Step 1: Install System Dependencies
+Run the following command to update your packages and install Python along with `pipx`:
+
+bash:
+
+sudo apt update && sudo apt install -y python3 python3-pip pipx
+pipx ensurepath
+
+> Note: If this is your first time installing pipx, close and reopen your terminal after running pipx ensurepath so your environment updates properly. 
+
+# Step 2: Install estregg-ybj
+Install the package globally in an isolated environment using pipx:
+
+pipx install estregg-ybj
+
+> Note: If you already have estregg-ybj installed and want to update to the latest version, run:
+
+pipx upgrade estregg-ybj
+
+# 🚀 Launching the Game
+Once installed, start the game anytime by executing:
+
+estregg
