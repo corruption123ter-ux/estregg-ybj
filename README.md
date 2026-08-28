@@ -1,6 +1,6 @@
 # estregg-ybj
 
-A terminal-based Python game built with `curses`. Run it directly inside your Linux environment!
+A terminal-based Python game built by Jeorge G. Miclat that was built with tool `curses`. Run it directly inside your Linux environment!
 
 ---
 
