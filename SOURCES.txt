@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+src/estregg/__init__.py
+src/estregg/game.py
+src/estregg.egg-info/PKG-INFO
+src/estregg.egg-info/SOURCES.txt
+src/estregg.egg-info/dependency_links.txt
+src/estregg.egg-info/entry_points.txt
+src/estregg.egg-info/top_level.txt
