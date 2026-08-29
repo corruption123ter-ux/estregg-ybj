@@ -31,3 +31,17 @@ pipx upgrade estregg-ybj
 Once installed, start the game anytime by executing:
 
 estregg
+
+> requently questions:
+
+# Is this a virus?
+> answer:
+
+No its not a virus, im not allowed to make a virus because its againts the rles of the law
+
+# did you copy someone else's creation?
+> answer:
+
+no i do not, icant do such thing as they will sue me so i create my game without copying someones creation
+
+# thaks for reading this files and have a good day!
