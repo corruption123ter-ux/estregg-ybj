@@ -1,3 +1,5 @@
+# Controls of ESTREGG!
+
 A- Auto
 B- Nudge Left
 X- Nudge Right
@@ -5,3 +7,7 @@ Y- Nudge Up
 I- Planets flagged
 3- Setting
 ctrl + b- Exit game
+
+> note this is a manual how to use and control the ship your playing so remember this
+
+Thanks for reading and have a good day!
