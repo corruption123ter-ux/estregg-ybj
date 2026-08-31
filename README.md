@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="https://charm.sh" alt="Estregg Rocket Animation" width="400"/>
+</p>
+
+
 # estregg-ybj
 
 A terminal-based Python game built by Yb_Jeorgie that was built with tool `curses`. Run it directly inside your Linux environment!
