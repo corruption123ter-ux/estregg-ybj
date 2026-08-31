@@ -64,7 +64,7 @@ Once installed, start the game anytime by executing:
 estregg
 ```
 
-> 💡 Note for Mobile Users: Because mobile screens lack arrow keys, it is highly recommended to use a physical Bluetooth keyboard, r Otig Keyboards, or an app like **Hacker's Keyboard** to play.
+> 💡 Note for Mobile Users: Because mobile screens lack arrow keys, it is highly recommended to use a physical Bluetooth keyboard, or Otg Keyboards, or an app like **Hacker's Keyboard** to play.
 
 ---
 
