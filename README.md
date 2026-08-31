@@ -78,6 +78,6 @@ No its not a virus, im not allowed to make a virus because its againts the rles 
 > answer:
 No i do not, icant do such thing as they will sue me so i create my game without copying someones creation
 
-> Please Note Gamepad controls isnt gonna work, it has been removed due to problems caused by Gamepad Control inputters, if you try the game would crash, i woul not recommend connect a gamepad contrller as it will break the game and your controller even if it said it on main website of estregg-ybj
+> Please Note Gamepad controls isnt gonna work, it has been removed due to problems caused by Gamepad Control inputters, if you try the game would crash, i woul not recommend connect a gamepad contrller as it will break the game and your controller even if you want to
 
 # thanks for reading this files and have a good day!
