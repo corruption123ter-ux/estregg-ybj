@@ -34,6 +34,14 @@ pipx ensurepath
 
 > ⚠️ Note: If this is your first time installing pipx, close and reopen your terminal after running pipx ensurepath so your environment updates properly. 
 
+# if doesnt work after running estregg Type this command in terminal:
+
+```bash:
+pipx ensurepath
+```
+> Note: if only said "running estregg" refresh your terminal and type the command above this note
+
+
 ### Step 2: Install estregg-ybj
 Install the package globally in an isolated environment using pipx:
 
