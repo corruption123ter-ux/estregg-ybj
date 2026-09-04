@@ -19,9 +19,8 @@ To run `estregg-ybj`, you need **Python 3** and **pipx** installed on your syste
 Choose the command block below that matches your operating system:
 
 #### Linux / Ubuntu / ChromeOS
-```bash:
-sudo apt update && sudo apt install -y python3 python3-pip pipx
-pipx ensurepath
+```bash
+sudo apt update && sudo apt install -y python3 python3-pip pipx && pipx ensurepath
 ```
 
 #### macOS
@@ -85,6 +84,14 @@ estregg
 **Q: Can I use a controller?**
 *   **A:** Gamepad controls are not supported. Connecting a gamepad controller may cause input errors or crash the engine, so using a standard keyboard is highly recommended.
 
-> Please Note Gamepad controls isnt gonna work, it has been removed due to problems caused by Gamepad Control inputters, if you try the game would crash, i woul not recommend connect a gamepad contrller as it will break the game and your controller even if you want to
+---
 
-# thanks for reading this files and have a good day!
+<h1 align="center">Please Note:</h1>
+
+<p align="center">
+  <strong>Gamepad controls isnt gonna work, it has been removed due to problems caused by Gamepad Control inputters, if you try the game would crash, i would not recommend connect a gamepad contrller as it will break the game and your controller even if you want to.</strong>
+</p>
+
+<p align="center">
+  <strong>Thankie And have a Good Day.</strong>
+</p>
