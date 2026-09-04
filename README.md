@@ -5,7 +5,7 @@
 <h1 align="center">estregg-ybj</h1>
 
 <p align="center">
-  <strong>A terminal-based space exploration game built with Python curses.</strong>
+  <strong>A terminal-based space exploration game built by YB_Jeorgie with Python curses.</strong>
 </p>
 
 ---
