@@ -1,8 +1,12 @@
-<img width="240" height="260" alt="Image" src="https://github.com/user-attachments/assets/e81e3b72-0ba0-418b-9fce-1dc855e2bf53" />
+<p align="center">
+  <img width="240" height="260" alt="Image" src="https://github.com/user-attachments/assets/e81e3b72-0ba0-418b-9fce-1dc855e2bf53" />
+</p>
 
-# estregg-ybj
+<h1 align="center">estregg-ybj</h1>
 
-A terminal-based Python game built by Yb_Jeorgie that was built with tool `curses`. Run it directly inside your Linux environment!
+<p align="center">
+  <strong>A terminal-based space exploration game built with Python curses.</strong>
+</p>
 
 ---
 
@@ -70,15 +74,16 @@ estregg
 
 ---
 
-> requently questions:
+## 💬 Frequently Asked Questions
 
-# Is this a virus?
-> answer:
-No its not a virus, im not allowed to make a virus because its againts the rles of the law
+**Q: Is this a virus?**
+*   **A:** No, it is not a virus! Everything is open-source, safe, and built entirely using standard Python libraries.
 
-# did you copy someone else's creation?
-> answer:
-No i do not, icant do such thing as they will sue me so i create my game without copying someones creation
+**Q: Did you copy someone else's creation?**
+*   **A:** No. This is an entirely custom, original project built from scratch. 
+
+**Q: Can I use a controller?**
+*   **A:** Gamepad controls are not supported. Connecting a gamepad controller may cause input errors or crash the engine, so using a standard keyboard is highly recommended.
 
 > Please Note Gamepad controls isnt gonna work, it has been removed due to problems caused by Gamepad Control inputters, if you try the game would crash, i woul not recommend connect a gamepad contrller as it will break the game and your controller even if you want to
 
