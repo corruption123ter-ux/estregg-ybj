@@ -1,0 +1,33 @@
+name: Publish Python Package to PyPI
+
+on:
+  release:
+    types: [published] # This prevents it from triggering on normal text updates!
+
+permissions:
+  contents: read
+  id-token: write # Gives GitHub permission to securely trade tokens with PyPI
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+
+    - name: Set up Python environment
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install build infrastructure
+      run: |
+        python -m pip install --upgrade pip
+        pip install build twine
+
+    - name: Compile distribution packages
+      run: python -m build
+
+    - name: Push package bundle to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+
