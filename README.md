@@ -1,4 +1,4 @@
-<img width="200" height="240" alt="Image" src="https://github.com/user-attachments/assets/a86a2f2c-04a2-4313-a048-e80c30a3d516" />
+<img width="240" height="260" alt="Image" src="https://github.com/user-attachments/assets/e81e3b72-0ba0-418b-9fce-1dc855e2bf53" />
 
 # estregg-ybj
 
