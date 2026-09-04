@@ -105,5 +105,9 @@ for reports
 </p>
 
 <p align="center">
+  <strong>https://lingojam.com/WingdingsTranslator</strong>
+</p>
+
+<p align="center">
   <strong>Thankie And have a Good Day.</strong>
 </p>
