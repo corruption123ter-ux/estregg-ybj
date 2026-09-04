@@ -1,3 +1,5 @@
+<img width="200" height="240" alt="Image" src="https://github.com/user-attachments/assets/a86a2f2c-04a2-4313-a048-e80c30a3d516" />
+
 # estregg-ybj
 
 A terminal-based Python game built by Yb_Jeorgie that was built with tool `curses`. Run it directly inside your Linux environment!
