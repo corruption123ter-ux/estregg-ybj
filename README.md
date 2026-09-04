@@ -39,7 +39,7 @@ pipx ensurepath
 
 > ⚠️ Note: If this is your first time installing pipx, close and reopen your terminal after running pipx ensurepath so your environment updates properly. 
 
-# if doesnt work after running estregg Type this command in terminal:
+### IF doesnt work after running estregg Type this command in terminal:
 
 ```bash:
 pipx ensurepath
