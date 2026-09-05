@@ -3,19 +3,14 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "estregg-ybj"
-version = "1.0.2"
-authors = [
-  { name="Jeorge", email="corruption123ter@gmail.com" },
-]
-description = "A terminal-based space exploration game"
+name = "estregg"
+version = "1.0.7"
+description = "ESTREGG Space Exploration Terminal Game"
 readme = "README.md"
 requires-python = ">=3.8"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: POSIX :: Linux",
+dependencies = [
+    "windows-curses; platform_system == 'Windows'",
 ]
 
 [project.scripts]
-estregg = "estregg.game:main"
+estregg = "estregg:main"
