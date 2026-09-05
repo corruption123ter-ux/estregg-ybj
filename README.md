@@ -82,7 +82,7 @@ estregg
 *   **A:** No. This is an entirely custom, original project built from scratch. 
 
 **Q: Is this Illegal?**
-*   **A:** No it is not illegal to code a game, also it isnt a hacking oll, if someone copies my game and turns it into a hacking hidden tool disguised as a game,please message me in reddit:
+*   **A:** No it is not illegal to code a game, also it isnt a hacking tool, if someone copies my game and turns it into a hacking hidden tool disguised as a game,please message me in reddit:
 https://www.reddit.com/user/Cool-Technician-7609/
 or message me in Gmail:
 https://mail.google.com/mail/u/0/#inbox?compose=DmwnWrRmVpWPkbLGfDFPKWkpdVbxprZSJfhgzKtHczBNssdpggQDPPtbXZvntxsXNkxnpMkTlCVb
