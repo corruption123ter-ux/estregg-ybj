@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
-import curses, sys, select, time, random, math, os
+import curses, sys, select, time, random, math, os, platform
 
+# Cross-platform terminal clear command
+CLEAR_CMD = 'cls' if platform.system() == 'Windows' else 'clear'
 
 
 class ESTREGG:
@@ -13,8 +15,6 @@ class ESTREGG:
         curses.curs_set(0)
 
         self.scr.nodelay(True)
-
-
 
         # Colors
 
@@ -36,8 +36,6 @@ class ESTREGG:
 
         curses.init_pair(7, curses.COLOR_CYAN, -1)     # Planets
 
-
-
         # ESTREGG - World State & Dynamic Galaxies
 
         self.galaxy_num = 1
@@ -45,8 +43,6 @@ class ESTREGG:
         self.world_x, self.world_y = 30.0, 15.0
 
         self.cam_x, self.cam_y = 0.0, 0.0
-
-
 
         self.direction = 'UP'
 
@@ -64,15 +60,11 @@ class ESTREGG:
 
         self.focused_star_details = None
 
-
-
         # Settings Options
 
         self.show_stars = True
 
         self.speed_multiplier = 1.0
-
-
 
         self.last_input_source = "Keyboard"
 
@@ -81,8 +73,6 @@ class ESTREGG:
         self.gamepad_mac = "N/A"
 
         self.gamepad = self._find_gamepad()
-
-
 
         # Planet Landing State
 
@@ -94,23 +84,17 @@ class ESTREGG:
 
         self.cooldown_landing = 0
 
-
-
         # Input Highlights
 
         self.dpad_state = {'UP': False, 'DOWN': False, 'LEFT': False, 'RIGHT': False}
 
         self.action_state = {'A': False, 'B': False, 'X': False, 'Y': False}
 
-
-
         # Stars & Physics Arrays
 
         self.stars = []
 
         self._generate_galaxy_content()
-
-
 
     def _generate_galaxy_content(self):
 
@@ -140,8 +124,6 @@ class ESTREGG:
 
             })
 
-
-
         self.wormholes = [
 
             {'x': 180, 'y': 180, 'name': f"ESTREGG Hyper-Portal Alpha-{self.galaxy_num}"},
@@ -150,41 +132,39 @@ class ESTREGG:
 
         ]
 
-
-
         self.black_hole = {'x': 0, 'y': -140, 'name': 'Sagittarius A*'}
 
         self.white_hole = {'x': -180, 'y': 100, 'name': 'Polaris Emitter'}
 
         self.stars = []
 
-
-
     def _find_gamepad(self):
 
-        try:
+        # Guard evdev import so Windows won't crash
 
-            from evdev import InputDevice, list_devices
+        if platform.system() == 'Linux':
 
-            for path in list_devices():
+            try:
 
-                dev = InputDevice(path)
+                from evdev import InputDevice, list_devices
 
-                if any(k in dev.name.lower() for k in ["controller", "gamepad", "gengame", "x7", "t-7", "joystick"]):
+                for path in list_devices():
 
-                    self.gamepad_mac = dev.uniq if dev.uniq else "N/A (USB or Virtual)"
+                    dev = InputDevice(path)
 
-                    return dev
+                    if any(k in dev.name.lower() for k in ["controller", "gamepad", "gengame", "x7", "t-7", "joystick"]):
 
-        except ImportError:
+                        self.gamepad_mac = dev.uniq if dev.uniq else "N/A (USB or Virtual)"
 
-            pass
+                        return dev
+
+            except (ImportError, Exception):
+
+                pass
 
         self.gamepad_mac = "N/A"
 
         return None
-
-
 
     def _safe_addstr(self, y, x, text, attr=curses.A_NORMAL):
 
@@ -212,8 +192,6 @@ class ESTREGG:
 
                     pass
 
-
-
     def _init_stars(self, h, w):
 
         if not self.stars:
@@ -238,15 +216,11 @@ class ESTREGG:
 
                 })
 
-
-
     def trigger_wormhole_animation(self):
 
         h, w = self.scr.getmaxyx()
 
         center_x, center_y = w // 2, h // 2
-
-
 
         for step in range(35):
 
@@ -266,8 +240,6 @@ class ESTREGG:
 
                     self._safe_addstr(sy, min(w - 2, sx + l), trail, curses.color_pair(1) | curses.A_BOLD)
 
-
-
             self._safe_addstr(center_y - 1, center_x - 2, ">>>>====>>", curses.color_pair(5) | curses.A_BOLD)
 
             self._safe_addstr(center_y,     center_x - 4, "===>> ENTERING ESTREGG WORMHOLE >>==", curses.color_pair(1) | curses.A_BOLD)
@@ -278,8 +250,6 @@ class ESTREGG:
 
             time.sleep(0.04)
 
-
-
         self.galaxy_num += 1
 
         self._generate_galaxy_content()
@@ -287,8 +257,6 @@ class ESTREGG:
         self.world_x, self.world_y = 0.0, 0.0
 
         self.cam_x, self.cam_y = 0.0, 0.0
-
-
 
         for step in range(25):
 
@@ -306,15 +274,11 @@ class ESTREGG:
 
                 self._safe_addstr(ey, ex, "@", curses.color_pair(4) | curses.A_BOLD)
 
-
-
             self._safe_addstr(center_y, center_x - 14, f"ESTREGG: ARRIVED IN GALAXY #{self.galaxy_num}", curses.color_pair(3) | curses.A_BOLD)
 
             self.scr.refresh()
 
             time.sleep(0.03)
-
-
 
     def _get_target_planet(self):
 
@@ -325,8 +289,6 @@ class ESTREGG:
             return None
 
         return min(unflagged, key=lambda p: math.hypot(p['x'] - self.world_x, p['y'] - self.world_y))
-
-
 
     def _apply_space_physics(self):
 
@@ -348,8 +310,6 @@ class ESTREGG:
 
                 self.world_y -= math.sin(angle) * 2.5
 
-
-
         wh_dist = math.hypot(self.white_hole['x'] - self.world_x, self.white_hole['y'] - self.world_y)
 
         if wh_dist < 35:
@@ -360,15 +320,11 @@ class ESTREGG:
 
             self.world_y += math.sin(angle) * 1.8
 
-
-
     def _draw_planet(self, p, h, w):
 
         px = int((p['x'] - self.cam_x) * self.zoom + (w // 2) * (1 - self.zoom))
 
         py = int((p['y'] - self.cam_y) * self.zoom + (h // 2) * (1 - self.zoom))
-
-
 
         if p['type'] == 'ring':
 
@@ -382,8 +338,6 @@ class ESTREGG:
 
             art = ["  .---.  ", " / o   \\ ", "|   O   |", " \\   o / ", "  '---'  "]
 
-
-
         for idx, line in enumerate(art):
 
             ly = py + idx - 2
@@ -392,13 +346,9 @@ class ESTREGG:
 
             self._safe_addstr(ly, lx, line, curses.color_pair(7) | curses.A_BOLD)
 
-
-
         if p['flagged']:
 
             self._safe_addstr(py - 3, px + 2, "[P]", curses.color_pair(3) | curses.A_BOLD)
-
-
 
     def focus_nearest_star_info(self):
 
@@ -410,8 +360,6 @@ class ESTREGG:
 
         self.star_info_open = not self.star_info_open
 
-
-
     def draw(self):
 
         self.scr.erase()
@@ -419,8 +367,6 @@ class ESTREGG:
         h, w = self.scr.getmaxyx()
 
         self._init_stars(h, w)
-
-
 
         margin_x = w // 4
 
@@ -430,8 +376,6 @@ class ESTREGG:
 
         screen_y = self.world_y - self.cam_y
 
-
-
         if screen_x < margin_x: self.cam_x -= (margin_x - screen_x)
 
         elif screen_x > w - margin_x: self.cam_x += (screen_x - (w - margin_x))
@@ -439,8 +383,6 @@ class ESTREGG:
         if screen_y < margin_y: self.cam_y -= (margin_y - screen_y)
 
         elif screen_y > h - margin_y: self.cam_y += (screen_y - (h - margin_y))
-
-
 
         if self.show_stars:
 
@@ -454,8 +396,6 @@ class ESTREGG:
 
                     self._safe_addstr(sy, sx, star['char'], curses.color_pair(6) | curses.A_DIM)
 
-
-
         for wh in self.wormholes:
 
             wx = int((wh['x'] - self.cam_x) * self.zoom + (w // 2) * (1 - self.zoom))
@@ -464,15 +404,11 @@ class ESTREGG:
 
             self._safe_addstr(wy, wx - 6, "( O WORMHOLE O )", curses.color_pair(1) | curses.A_BOLD)
 
-
-
         bhx = int((self.black_hole['x'] - self.cam_x) * self.zoom + (w // 2) * (1 - self.zoom))
 
         bhy = int((self.black_hole['y'] - self.cam_y) * self.zoom + (h // 2) * (1 - self.zoom))
 
         self._safe_addstr(bhy, bhx - 6, "(( BLACK HOLE ))", curses.A_REVERSE | curses.A_BOLD)
-
-
 
         whx = int((self.white_hole['x'] - self.cam_x) * self.zoom + (w // 2) * (1 - self.zoom))
 
@@ -480,13 +416,9 @@ class ESTREGG:
 
         self._safe_addstr(why, whx - 6, "(( WHITE HOLE ))", curses.color_pair(4) | curses.A_BOLD)
 
-
-
         for p in self.planets:
 
             self._draw_planet(p, h, w)
-
-
 
         self._safe_addstr(1, 2, f"--- ESTREGG GALAXY SECTOR #{self.galaxy_num} ---", curses.color_pair(5))
 
@@ -498,15 +430,11 @@ class ESTREGG:
 
         self._safe_addstr(3, 2, f"[TELEMETRY] POS: ({self.world_x:.1f}, {self.world_y:.1f}) | DIR: {self.direction} | LAST IN: {self.last_input_source}", curses.color_pair(6))
 
-
-
         sy = int((self.world_y - self.cam_y) * self.zoom + (h // 2) * (1 - self.zoom))
 
         sx = int((self.world_x - self.cam_x) * self.zoom + (w // 2) * (1 - self.zoom))
 
         flame = random.choice(["W", "V", "M", "Y", "v", "^"]) if not self.is_landed else ""
-
-
 
         if self.direction == 'UP':
 
@@ -518,8 +446,6 @@ class ESTREGG:
 
             if flame: self._safe_addstr(sy+2, sx-1, f" {flame}{flame} ", curses.color_pair(2) | curses.A_BOLD)
 
-
-
         elif self.direction == 'DOWN':
 
             self._safe_addstr(sy-1, sx-1, "\\\"\"/", curses.color_pair(5) | curses.A_BOLD)
@@ -529,8 +455,6 @@ class ESTREGG:
             self._safe_addstr(sy+1, sx-1, " \\/ ", curses.color_pair(5) | curses.A_BOLD)
 
             if flame: self._safe_addstr(sy-2, sx-1, f" {flame}{flame} ", curses.color_pair(2) | curses.A_BOLD)
-
-
 
         elif self.direction == 'LEFT':
 
@@ -542,8 +466,6 @@ class ESTREGG:
 
             if flame: self._safe_addstr(sy, sx+3, f"{flame}", curses.color_pair(2) | curses.A_BOLD)
 
-
-
         elif self.direction == 'RIGHT':
 
             self._safe_addstr(sy-1, sx-1, " /\\ ", curses.color_pair(5) | curses.A_BOLD)
@@ -554,13 +476,9 @@ class ESTREGG:
 
             if flame: self._safe_addstr(sy, sx-2, f"{flame}", curses.color_pair(2) | curses.A_BOLD)
 
-
-
         if self.cooldown_landing > 0:
 
             self.cooldown_landing -= 1
-
-
 
         if not self.is_landed and self.cooldown_landing == 0:
 
@@ -578,15 +496,11 @@ class ESTREGG:
 
                     self.current_landed_planet = p
 
-
-
         if self.is_landed and self.current_landed_planet:
 
             self.world_x = self.current_landed_planet['x']
 
             self.world_y = self.current_landed_planet['y']
-
-
 
         by = h - 5
 
@@ -600,15 +514,11 @@ class ESTREGG:
 
         self._safe_addstr(by+2, 3, " [v] ", d_color('DOWN'))
 
-
-
         rx = max(15, w - 16)
 
         x_attr = (curses.color_pair(4) | curses.A_BOLD) if self.action_state['X'] else curses.A_DIM
 
         b_attr = (curses.color_pair(2) | curses.A_BOLD) if self.action_state['B'] else curses.A_DIM
-
-
 
         self._safe_addstr(by, rx+3, "(Y)", curses.color_pair(3) | (curses.A_BOLD if self.action_state['Y'] else curses.A_DIM))
 
@@ -617,8 +527,6 @@ class ESTREGG:
         self._safe_addstr(by+1, rx+6, "(B)", b_attr)
 
         self._safe_addstr(by+2, rx+3, "(A)", curses.color_pair(1) | (curses.A_BOLD if self.action_state['A'] else curses.A_DIM))
-
-
 
         if self.info_open:
 
@@ -630,13 +538,9 @@ class ESTREGG:
 
             self._safe_addstr(my + 1, mx + 2, f"=== ESTREGG PLANETS (GALAXY #{self.galaxy_num}) ===", curses.A_REVERSE | curses.A_BOLD)
 
-
-
             flagged_cnt = sum(1 for p in self.planets if p['flagged'])
 
             self._safe_addstr(my + 3, mx + 2, f"Progress: {flagged_cnt} / 10 Planets Flagged", curses.A_REVERSE | curses.A_BOLD)
-
-
 
             for idx, p in enumerate(self.planets):
 
@@ -646,13 +550,9 @@ class ESTREGG:
 
                     self._safe_addstr(my + 4 + idx, mx + 2, f"{p['name']} : {status}", curses.A_REVERSE)
 
-
-
             if flagged_cnt == 10:
 
                 self._safe_addstr(my + 12, mx + 2, "ALL FLAGS COLLECTED! PRESS 'A' FOR WORMHOLE!", curses.A_REVERSE | curses.COLOR_CYAN | curses.A_BOLD)
-
-
 
         if self.settings_open:
 
@@ -672,8 +572,6 @@ class ESTREGG:
 
             self._safe_addstr(my + 7, mx + 2, f"Controller MAC               : {self.gamepad_mac}", curses.A_REVERSE)
 
-
-
         if self.star_info_open and self.focused_star_details:
 
             mw, mh = 48, 7
@@ -692,11 +590,7 @@ class ESTREGG:
 
             self._safe_addstr(my + 5, mx + 2, f"Solar Mass    : {s['mass']} M_sun", curses.A_REVERSE)
 
-
-
         self.scr.refresh()
-
-
 
     def update_autopilot(self):
 
@@ -705,8 +599,6 @@ class ESTREGG:
             self.zoom = 1.0
 
             return
-
-
 
         target = self._get_target_planet()
 
@@ -718,19 +610,13 @@ class ESTREGG:
 
             return
 
-
-
         tx, ty = target['x'], target['y']
 
         dist = math.hypot(tx - self.world_x, ty - self.world_y)
 
-
-
         if dist > 40: self.zoom = max(0.4, self.zoom - 0.02)
 
         elif dist < 20: self.zoom = min(1.0, self.zoom + 0.04)
-
-
 
         speed = 1.2 * self.speed_multiplier
 
@@ -740,15 +626,11 @@ class ESTREGG:
 
             else: self.world_x -= speed; self.direction = 'LEFT'
 
-
-
         if abs(self.world_y - ty) > 0.5:
 
             if self.world_y < ty: self.world_y += speed; self.direction = 'DOWN'
 
             else: self.world_y -= speed; self.direction = 'UP'
-
-
 
     def process_movement(self, dir_name, step=1.0):
 
@@ -757,8 +639,6 @@ class ESTREGG:
         self.direction = dir_name
 
         self.dpad_state[dir_name] = True
-
-
 
         if self.is_landed:
 
@@ -778,8 +658,6 @@ class ESTREGG:
 
             return
 
-
-
         if dir_name == 'UP': self.world_y -= step
 
         elif dir_name == 'DOWN': self.world_y += step
@@ -788,19 +666,13 @@ class ESTREGG:
 
         elif dir_name == 'RIGHT': self.world_x += step
 
-
-
     def handle_input(self):
 
         for k in self.dpad_state: self.dpad_state[k] = False
 
         for k in self.action_state: self.action_state[k] = False
 
-
-
         key = self.scr.getch()
-
-
 
         if key != -1:
 
@@ -808,15 +680,11 @@ class ESTREGG:
 
             self.last_pressed_key = f"Keycode {key} ({chr(key) if 32 <= key <= 126 else 'Special'})"
 
-
-
         # Ctrl + B (ASCII Keycode 2) or Tab (9) exits cleanly
 
         if key in [2, 9]:
 
             return False
-
-
 
         if key == curses.KEY_UP: self.process_movement('UP')
 
@@ -825,8 +693,6 @@ class ESTREGG:
         elif key == curses.KEY_LEFT: self.process_movement('LEFT')
 
         elif key == curses.KEY_RIGHT: self.process_movement('RIGHT')
-
-
 
         if key in [ord('a'), ord('A')]: 
 
@@ -840,13 +706,9 @@ class ESTREGG:
 
                 self.autopilot = not self.autopilot
 
-
-
         elif key in [ord('i'), ord('I')]: 
 
             self.info_open = not self.info_open
-
-
 
         elif key in [ord('b'), ord('B')]: 
 
@@ -854,15 +716,11 @@ class ESTREGG:
 
             self.action_state['B'] = True
 
-
-
         elif key in [ord('x'), ord('X')]: 
 
             self.process_movement('LEFT', step=0.4)
 
             self.action_state['X'] = True
-
-
 
         elif key in [ord('y'), ord('Y')]: 
 
@@ -870,19 +728,13 @@ class ESTREGG:
 
             self.action_state['Y'] = True
 
-
-
         elif key in [ord('r'), ord('R')]: 
 
             self.focus_nearest_star_info()
 
-
-
         elif key == ord('3'): 
 
             self.settings_open = not self.settings_open
-
-
 
         elif self.settings_open:
 
@@ -894,93 +746,85 @@ class ESTREGG:
 
                 self.speed_multiplier = 2.0 if self.speed_multiplier == 1.0 else (3.0 if self.speed_multiplier == 2.0 else 1.0)
 
+        if self.gamepad and platform.system() == 'Linux':
 
+            try:
 
-        if self.gamepad:
+                from evdev import ecodes
 
-            from evdev import ecodes
+                r, w_fds, x = select.select([self.gamepad.fd], [], [], 0.001)
 
-            r, w_fds, x = select.select([self.gamepad.fd], [], [], 0.001)
+                if r:
 
-            if r:
+                    for event in self.gamepad.read():
 
-                for event in self.gamepad.read():
+                        if event.type == ecodes.EV_KEY and event.value == 1:
 
-                    if event.type == ecodes.EV_KEY and event.value == 1:
+                            self.last_input_source = f"Gamepad ({self.gamepad.name})"
 
-                        self.last_input_source = f"Gamepad ({self.gamepad.name})"
+                            self.last_pressed_key = f"Btn Code {event.code}"
 
-                        self.last_pressed_key = f"Btn Code {event.code}"
+                            if event.code in [304, 305]:
 
+                                self.action_state['A'] = True
 
+                                if sum(1 for p in self.planets if p['flagged']) == 10:
 
-                        if event.code in [304, 305]:
+                                    self.trigger_wormhole_animation()
 
-                            self.action_state['A'] = True
+                                else:
 
-                            if sum(1 for p in self.planets if p['flagged']) == 10:
+                                    self.autopilot = not self.autopilot
 
-                                self.trigger_wormhole_animation()
+                            elif event.code in [314, 315]:
 
-                            else:
+                                self.settings_open = not self.settings_open
 
-                                self.autopilot = not self.autopilot
+                            elif event.code == 317:
 
+                                self.info_open = not self.info_open
 
+                            elif event.code == 306:
 
-                        elif event.code in [314, 315]:
+                                self.process_movement('RIGHT', step=0.4)
 
-                            self.settings_open = not self.settings_open
+                                self.action_state['B'] = True
 
+                            elif event.code == 307:
 
+                                self.process_movement('LEFT', step=0.4)
 
-                        elif event.code == 317:
+                                self.action_state['X'] = True
 
-                            self.info_open = not self.info_open
+                            elif event.code == 308:
 
+                                self.process_movement('UP', step=0.4)
 
+                                self.action_state['Y'] = True
 
-                        elif event.code == 306:
+                            elif event.code == 318:
 
-                            self.process_movement('RIGHT', step=0.4)
+                                self.focus_nearest_star_info()
 
-                            self.action_state['B'] = True
+                        elif event.type == ecodes.EV_ABS:
 
-                        elif event.code == 307:
+                            if event.code in [0, 2]:
 
-                            self.process_movement('LEFT', step=0.4)
+                                if event.value < 10000: self.process_movement('LEFT')
 
-                            self.action_state['X'] = True
+                                elif event.value > 55000: self.process_movement('RIGHT')
 
-                        elif event.code == 308:
+                            if event.code in [1, 5]:
 
-                            self.process_movement('UP', step=0.4)
+                                if event.value < 10000: self.process_movement('UP')
 
-                            self.action_state['Y'] = True
+                                elif event.value > 55000: self.process_movement('DOWN')
 
-                        elif event.code == 318:
+            except Exception:
 
-                            self.focus_nearest_star_info()
-
-
-
-                    elif event.type == ecodes.EV_ABS:
-
-                        if event.code in [0, 2]:
-
-                            if event.value < 10000: self.process_movement('LEFT')
-
-                            elif event.value > 55000: self.process_movement('RIGHT')
-
-                        if event.code in [1, 5]:
-
-                            if event.value < 10000: self.process_movement('UP')
-
-                            elif event.value > 55000: self.process_movement('DOWN')
+                pass
 
         return True
-
-
 
     def run(self):
 
@@ -999,14 +843,20 @@ class ESTREGG:
             time.sleep(0.03)
 
 
-
 def main_curses(stdscr):
+
     app = ESTREGG(stdscr)
+
     app.run()
 
+
 def main():
+
     curses.wrapper(main_curses)
 
+
 if __name__ == '__main__':
+
     main()
-    os.system('clear')
+
+    os.system(CLEAR_CMD)
