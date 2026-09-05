@@ -28,6 +28,10 @@ sudo apt update && sudo apt install -y python3 python3-pip pipx && pipx ensurepa
 brew install pipx
 pipx ensurepath
 ```
+### Windows (Command Prompt / PowerShell)
+```bash:
+py -m pip install --user pipx && py -m pipx ensurepath
+```
 
 #### Android (Termux)
 ```bash:
