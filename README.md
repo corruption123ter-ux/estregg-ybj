@@ -88,10 +88,10 @@ estregg
 
 **Q: Is this Illegal?**
 *   **A:** No it is not illegal to code a game, also it isnt a hacking tool, if someone copies my game and turns it into a hacking hidden tool disguised as a game,please message me in reddit:
-https://www.reddit.com/user/Cool-Technician-7609/
+**[YB-Jeorgie reddit](https://www.reddit.com/user/Cool-Technician-7609/)**
 or message me in Gmail:
-https://mail.google.com/mail/u/0/#inbox?compose=DmwnWrRmVpWPkbLGfDFPKWkpdVbxprZSJfhgzKtHczBNssdpggQDPPtbXZvntxsXNkxnpMkTlCVb
-for reports
+**[Email Me](https://mail.google.com/mail/u/0/#inbox?compose=DmwnWrRmVpWPkbLGfDFPKWkpdVbxprZSJfhgzKtHczBNssdpggQDPPtbXZvntxsXNkxnpMkTlCVb)**
+for reports or concerns
 
 ---
 
