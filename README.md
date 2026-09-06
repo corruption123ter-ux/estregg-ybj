@@ -51,14 +51,6 @@ pipx ensurepath
 
 > ⚠️ Note: If this is your first time installing pipx, close and reopen your terminal after running pipx ensurepath so your environment updates properly. 
 
-### IF doesnt work after running estregg Type this command in terminal:
-
-```bash:
-pipx ensurepath
-```
-> Note: if only said "running estregg" refresh your terminal and type the command above this note
-
-
 ### Step 2: Install estregg-ybj
 Install the package globally in an isolated environment using pipx:
 
@@ -71,6 +63,7 @@ pipx install estregg-ybj
 ```bash:
 pipx upgrade estregg-ybj
 ```
+> Note: If you Sucessfully Downloaded Estregg-ybj but when u Ran estregg it said "launching estregg" make sure you ran pipx ensurepath And Restarted your Terminal so estregg Works
 
 ---
 
@@ -81,7 +74,7 @@ Once installed, start the game anytime by executing:
 estregg
 ```
 
-> 💡 Note for Mobile Users: Because mobile screens lack arrow keys, it is highly recommended to use a physical Bluetooth keyboard, or Otg Keyboards, or an app like **Hacker's Keyboard** to play.
+> 💡 Note for Mobile Users: Because mobile screens lack arrow keys, it is highly recommended to use a physical Bluetooth keyboard, Otg Keyboards, Virtual keyboards or an app like **Hacker's Keyboard** to play.
 
 ---
 
