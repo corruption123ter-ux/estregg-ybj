@@ -110,7 +110,7 @@ for reports
 </p>
 
 <p align="center">
-  <strong>**[WD_VIEW](https://lingojam.com/WingdingsTranslator)**</strong>
+  <strong>[WD-VIEW]([https://python.org](https://lingojam.com/WingdingsTranslator)</strong>
 </p>
 
 <p align="center">
