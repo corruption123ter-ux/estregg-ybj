@@ -98,7 +98,7 @@ for reports
 <h1 align="center">Please Note:</h1>
 
 <p align="center">
-  <strong>Gamepad controls isnt gonna work, it has been removed due to problems caused by Gamepad Control inputters, if you try the game would crash, i would not recommend connect a gamepad contrller as it will break the game and your controller even if you want to.</strong>
+  <strong>Gamepad controls isnt gonna work, it has been removed due to problems caused by Gamepad Control inputters, if you try the game would crash, i would not recommend connect a gamepad controller as it will break the game and your controller even if you want to.</strong>
 </p>
 
 <p align="center">
@@ -110,7 +110,7 @@ for reports
 </p>
 
 <p align="center">
-  <strong>https://lingojam.com/WingdingsTranslator</strong>
+  <strong>**[WD_VIEW](https://lingojam.com/WingdingsTranslator)**</strong>
 </p>
 
 <p align="center">
