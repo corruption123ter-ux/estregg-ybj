@@ -110,8 +110,9 @@ for reports
 </p>
 
 <p align="center">
-  [WD-VIEW](https://python.org](https://lingojam.com/WingdingsTranslator)
+  <strong>[Delta Code WD](https://lingojam.com/WingdingsTranslator)</strong>
 </p>
+
 
 <p align="center">
   <strong>Thankie And have a Good Day.</strong>
