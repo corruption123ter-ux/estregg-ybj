@@ -102,7 +102,7 @@ for reports
 </p>
 
 <p align="center">
-  <strong>INCOMING SIGNAL CODE D4F6986 DECODE:</strong>
+  <strong>INCOMING SIGNAL CODE <a href="https://lingojam.com">D4F6986</a> DECODE:</strong>
 </p>
 
 <p align="center">
@@ -110,7 +110,7 @@ for reports
 </p>
 
 <p align="center">
-  <strong>[Delta Code WD](https://lingojam.com/WingdingsTranslator)</strong>
+  <strong><a href="https://lingojam.com">Delta Code WD</a></strong>
 </p>
 
 
