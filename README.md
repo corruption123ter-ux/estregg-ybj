@@ -29,11 +29,17 @@ brew install pipx
 pipx ensurepath
 ```
 
-### Windows (Command Prompt / PowerShell)
-```bash:
+#### Windows (Command Prompt / PowerShell)
+```bash
 py -m pip install --user pipx && py -m pipx ensurepath
 ```
-> ⚠️ Note: To run estregg in Windows you need to run "pip install windows-curses" first in The modern windows terminal to make it work
+> ⚠️ **Note:** To run `estregg` on Windows, you must run `pip install windows-curses` in the Modern Windows Terminal first to prevent crashes.
+
+#### Windows Offline / Download Troubleshooting
+If you encounter network errors like **"cannot download python tools"**, you can install Python manually using a USB drive:
+1. Use an online computer to download the standard Python installer executable from **[python.org](https://python.org)**.
+2. Save the installer package directly to a **USB flash drive**.
+3. Plug the USB into your target machine, run the installer, and ensure you check the box that says **"Add python.exe to PATH"** before finishing setup.
 
 #### Android (Termux)
 ```bash:
