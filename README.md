@@ -8,6 +8,17 @@
 [![Python Versions](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://pypi.org/project/estregg-ybj/)
 [![GitHub release](https://img.shields.io/github/v/release/corruption123ter-ux/estregg-ybj)](https://github.com/corruption123ter-ux/estregg-ybj/releases)
 
+<!-- Dependencies -->
+[![Curses](https://img.shields.io/badge/dependency-curses-green.svg)](https://docs.python.org/3/library/curses.html)
+
+<!-- Platforms Supported -->
+[![ChromeOS](https://img.shields.io/badge/platform-ChromeOS-yellow.svg)](https://github.com/corruption123ter-ux/estregg-ybj)
+[![Windows](https://img.shields.io/badge/platform-Windows-0078D6.svg?logo=windows&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
+[![WINE](https://img.shields.io/badge/platform-WINE-8F0052.svg)](https://github.com/corruption123ter-ux/estregg-ybj)
+[![macOS](https://img.shields.io/badge/platform-macOS-000000.svg?logo=apple&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
+[![Android](https://img.shields.io/badge/platform-Android-3DDC84.svg?logo=android&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
+[![Linux](https://img.shields.io/badge/platform-Linux-FCC624.svg?logo=linux&logoColor=black)](https://github.com/corruption123ter-ux/estregg-ybj)
+
 <p align="center">
   <strong>A terminal-based space exploration game built by YB_Jeorgie with Python curses.</strong>
 </p>
