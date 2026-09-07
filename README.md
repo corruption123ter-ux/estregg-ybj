@@ -28,9 +28,6 @@
 <!-- ASCII Game Badge -->
 [![ASCII Game](https://img.shields.io/badge/genre-ASCII%20Game-black.svg?logo=terminal&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
 
-<!-- PyPI Package Badge -->
-[![PyPI Package](https://img.shields.io/pypi/v/estregg-ybj.svg?logo=pypi&logoColor=white)](https://pypi.org/project/estregg-ybj/)
-
 <!-- Pip Install Badge -->
 [![pip install](https://img.shields.io/badge/pip--install-estregg--ybj-3776AB.svg?logo=python&logoColor=white)](https://pypi.org/project/estregg-ybj/)
 
