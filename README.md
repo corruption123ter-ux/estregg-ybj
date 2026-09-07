@@ -19,6 +19,15 @@
 [![Android](https://img.shields.io/badge/platform-Android-3DDC84.svg?logo=android&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
 [![Linux](https://img.shields.io/badge/platform-Linux-FCC624.svg?logo=linux&logoColor=black)](https://github.com/corruption123ter-ux/estregg-ybj)
 
+<!-- Rocket Badge -->
+[![Rocket](https://img.shields.io/badge/theme-rocket-FF4500.svg?logo=rocket&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
+
+<!-- Creator Badge -->
+[![Creator](https://img.shields.io/badge/Creator-YB__Jeorgie-9932CC.svg?logo=gamepad&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
+
+<!-- ASCII Game Badge -->
+[![ASCII Game](https://img.shields.io/badge/genre-ASCII%20Game-black.svg?logo=terminal&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
+
 <p align="center">
   <strong>A terminal-based space exploration game built by YB_Jeorgie with Python curses.</strong>
 </p>
