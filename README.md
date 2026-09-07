@@ -20,7 +20,7 @@
 [![Linux](https://img.shields.io/badge/platform-Linux-FCC624.svg?logo=linux&logoColor=black)](https://github.com/corruption123ter-ux/estregg-ybj)
 
 <!-- Rocket Badge -->
-[![Rocket](https://img.shields.io/badge/theme-rocket-FF4500.svg?logo=rocket&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
+[![Space](https://img.shields.io/badge/theme-rocket-FF4500.svg?logo=rocket&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
 
 <!-- Creator Badge -->
 [![Creator](https://img.shields.io/badge/Creator-YB__Jeorgie-9932CC.svg?logo=gamepad&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
