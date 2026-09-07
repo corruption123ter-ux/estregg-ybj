@@ -4,6 +4,10 @@
 
 <h1 align="center">estregg-ybj</h1>
 
+[![PyPI version](https://img.shields.io/pypi/v/estregg-ybj.svg)](https://pypi.org/project/estregg-ybj/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/estregg-ybj.svg)](https://pypi.org/project/estregg-ybj/)
+[![GitHub release](https://img.shields.io/github/v/release/corruption123ter-ux/estregg-ybj)](https://github.com/corruption123ter-ux/estregg-ybj/releases)
+
 <p align="center">
   <strong>A terminal-based space exploration game built by YB_Jeorgie with Python curses.</strong>
 </p>
@@ -56,6 +60,11 @@ Install the package globally in an isolated environment using pipx:
 
 ```bash:
 pipx install estregg-ybj
+```
+Or
+
+```bash:
+pipx install git+https://github.com/corruption123ter-ux/estregg-ybj.git@v1.1.4
 ```
 
 > Note: If you already have estregg-ybj installed and want to update to the latest version, run:
