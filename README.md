@@ -19,7 +19,7 @@
 [![Android](https://img.shields.io/badge/platform-Android-3DDC84.svg?logo=android&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
 [![Linux](https://img.shields.io/badge/platform-Linux-FCC624.svg?logo=linux&logoColor=black)](https://github.com/corruption123ter-ux/estregg-ybj)
 
-<!-- Rocket Badge -->
+<!-- Space Badge -->
 [![Space](https://img.shields.io/badge/theme-space-FF4500.svg?logo=rocket&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
 
 <!-- Creator Badge -->
@@ -27,6 +27,15 @@
 
 <!-- ASCII Game Badge -->
 [![ASCII Game](https://img.shields.io/badge/genre-ASCII%20Game-black.svg?logo=terminal&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
+
+<!-- PyPI Package Badge -->
+[![PyPI Package](https://img.shields.io/pypi/v/estregg-ybj.svg?logo=pypi&logoColor=white)](https://pypi.org/project/estregg-ybj/)
+
+<!-- Pip Install Badge -->
+[![pip install](https://img.shields.io/badge/pip--install-estregg--ybj-3776AB.svg?logo=python&logoColor=white)](https://pypi.org/project/estregg-ybj/)
+
+<!-- Pipx Install Badge -->
+[![pipx install](https://img.shields.io/badge/pipx--install-estregg--ybj-107000.svg?logo=python&logoColor=white)](https://pypi.org/project/estregg-ybj/)
 
 <p align="center">
   <strong>A terminal-based space exploration game built by YB_Jeorgie with Python curses.</strong>
