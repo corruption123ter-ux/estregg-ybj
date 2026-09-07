@@ -5,7 +5,7 @@
 <h1 align="center">estregg-ybj</h1>
 
 [![PyPI version](https://img.shields.io/pypi/v/estregg-ybj.svg)](https://pypi.org/project/estregg-ybj/)
-[![Python Versions](https://img.shields.io/pypi/pyversions/estregg-ybj.svg)](https://pypi.org/project/estregg-ybj/)
+[![Python Versions](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://pypi.org/project/estregg-ybj/)
 [![GitHub release](https://img.shields.io/github/v/release/corruption123ter-ux/estregg-ybj)](https://github.com/corruption123ter-ux/estregg-ybj/releases)
 
 <p align="center">
