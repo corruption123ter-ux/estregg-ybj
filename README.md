@@ -10,7 +10,7 @@
 
 <!-- Dependencies/Tools -->
 [![Curses](https://img.shields.io/badge/dependency-curses-green.svg)](https://docs.python.org/3/library/curses.html)
-[![WINE](https://img.shields.io/badge/platform-WINE-8F0052.svg)](https://github.com/corruption123ter-ux/estregg-ybj)
+[![WINE](https://img.shields.io/badge/Tool-WINE-8F0052.svg)](https://github.com/corruption123ter-ux/estregg-ybj)
 
 <!-- Platforms Supported -->
 [![ChromeOS](https://img.shields.io/badge/platform-ChromeOS-yellow.svg)](https://github.com/corruption123ter-ux/estregg-ybj)
