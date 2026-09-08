@@ -31,9 +31,6 @@
 <!-- Pip Install Badge -->
 [![pip install](https://img.shields.io/badge/pip--install-estregg--ybj-3776AB.svg?logo=python&logoColor=white)](https://pypi.org/project/estregg-ybj/)
 
-<!-- Pipx Install Badge -->
-[![pipx install](https://img.shields.io/badge/pipx--install-estregg--ybj-107000.svg?logo=python&logoColor=white)](https://pypi.org/project/estregg-ybj/)
-
 <p align="center">
   <strong>A terminal-based space exploration game built by YB_Jeorgie with Python curses.</strong>
 </p>
@@ -87,12 +84,56 @@ Install the package globally in an isolated environment using pipx:
 ```bash:
 pipx install estregg-ybj
 ```
-Or
+Or use Docker
 
 ```bash:
-pipx install git+https://github.com/corruption123ter-ux/estregg-ybj.git@v1.1.4
+docker pull ghcr.io/corruption123ter-ux/estregg-ybj:v1.1.5
+```
+If you use Docker do these steps First:
+---
+### 1. Update package manager and install prerequisites: 
+Run the following command in your Linux terminal to update your system and install necessary transfer tools:
+
+```bash:
+sudo apt update && sudo apt install -y ca-certificates curl gnupg
 ```
 
+### 2. Add Docker official GPG key and repository:
+Set up the official Docker repository for Debian:
+
+```bash:
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+### 3. Install Docker engine:
+Update your apt package list and install Docker:
+
+```bash
+sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io
+```
+
+### 4. Grant non-root permissions and start service:
+Add your user to the docker group and start the Docker service inside Crostini:
+
+```bash
+sudo usermod -aG docker $USER
+sudo service docker start
+```
+> Note: To verify that Docker is installed and running correctly, run:
+
+```bash:
+docker --version
+```
+If it Works: it ill display a version number like Docker version 2x.x.x
+if it has errors, try the entire process and restart your computer
+---
 > Note: If you already have estregg-ybj installed and want to update to the latest version, run:
 
 ```bash:
@@ -107,6 +148,11 @@ Once installed, start the game anytime by executing:
 
 ```bash:
 estregg
+```
+Or
+
+```bash:
+docker run -it ghcr.io/corruption123ter-ux/estregg-ybj:v1.1.5
 ```
 
 > 💡 Note for Mobile Users: Because mobile screens lack arrow keys, it is highly recommended to use a physical Bluetooth keyboard, Otg Keyboards, Virtual keyboards or an app like **Hacker's Keyboard** to play.
