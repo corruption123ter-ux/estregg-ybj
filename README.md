@@ -181,9 +181,10 @@ docker run -it ghcr.io/corruption123ter-ux/estregg-ybj:v1.1.5
 *   **A:** No it is not illegal to code a game or to use legal dependecies tools
 
 If you have any concerns please message me via:
-**[YB-Jeorgie reddit](https://www.reddit.com/user/Cool-Technician-7609/)**
 
-**[Email](https://mail.google.com/mail/u/0/#inbox?compose=DmwnWrRmVpWPkbLGfDFPKWkpdVbxprZSJfhgzKtHczBNssdpggQDPPtbXZvntxsXNkxnpMkTlCVb)**
+**🖨[YB-Jeorgie reddit](https://www.reddit.com/user/Cool-Technician-7609/)**
+
+**📧[Email](https://mail.google.com/mail/u/0/#inbox?compose=DmwnWrRmVpWPkbLGfDFPKWkpdVbxprZSJfhgzKtHczBNssdpggQDPPtbXZvntxsXNkxnpMkTlCVb)**
 
 ---
 
