@@ -143,7 +143,7 @@ docker --version
 ```
 
 If it Works: It will display a version number like Docker version 2x.x.x
-if it has errors, try the entire process and restart your computer
+if it has errors, try the entire process and restart your terminal
 
 ---
 > Note: If you already have estregg-ybj installed and want to update to the latest version, run:
