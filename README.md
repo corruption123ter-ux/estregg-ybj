@@ -178,11 +178,12 @@ docker run -it ghcr.io/corruption123ter-ux/estregg-ybj:v1.1.5
 *   **A:** No. This is an entirely custom, original project built from scratch. 
 
 **Q: Is this Illegal?**
-*   **A:** No it is not illegal to code a game, also it isnt a hacking tool, if someone copies my game and turns it into a hacking hidden tool disguised as a game,please message me in reddit:
+*   **A:** No it is not illegal to code a game or to use legal dependecies tools
+
+If you have any concerns please message me via:
 **[YB-Jeorgie reddit](https://www.reddit.com/user/Cool-Technician-7609/)**
-or message me in Gmail:
-**[Email Me](https://mail.google.com/mail/u/0/#inbox?compose=DmwnWrRmVpWPkbLGfDFPKWkpdVbxprZSJfhgzKtHczBNssdpggQDPPtbXZvntxsXNkxnpMkTlCVb)**
-for reports or concerns
+
+**[Email](https://mail.google.com/mail/u/0/#inbox?compose=DmwnWrRmVpWPkbLGfDFPKWkpdVbxprZSJfhgzKtHczBNssdpggQDPPtbXZvntxsXNkxnpMkTlCVb)**
 
 ---
 
