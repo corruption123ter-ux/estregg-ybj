@@ -57,9 +57,17 @@ pipx ensurepath
 ```
 
 #### Windows (Command Prompt / PowerShell)
-```bash
-py -m pip install --user pipx && py -m pipx ensurepath
+Command Prompt:
+```bash:
+py -m pip install --user pipx
+py -m pipx ensurepath
 ```
+
+Powershell:
+```bash
+py -m pip install --user pipx; pipx ensurepath
+```
+
 > ⚠️ **Note:** To run `estregg` on Windows, you must run `pip install windows-curses` in the Modern Windows Terminal first to prevent crashes.
 
 #### Windows Offline / Download Troubleshooting
