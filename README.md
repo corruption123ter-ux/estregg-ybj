@@ -31,7 +31,7 @@
 [![ASCII Game](https://img.shields.io/badge/genre-ASCII%20Game-black.svg?logo=terminal&logoColor=white)](https://github.com/corruption123ter-ux/estregg-ybj)
 
 <!-- Pip Install Badge -->
-[![pip install](https://img.shields.io/badge/pip--install-estregg--ybj-3776AB.svg?logo=python&logoColor=white)](https://pypi.org/project/estregg-ybj/)
+[![pipx install](https://img.shields.io/badge/pipx-install-estregg--ybj-3776AB.svg?logo=python&logoColor=white)](https://pypi.org/project/estregg-ybj/)
 
 <p align="center">
   <strong>A terminal-based space exploration game built by YB_Jeorgie with Python curses.</strong>
