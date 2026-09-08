@@ -94,13 +94,13 @@ pipx ensurepath
 > ⚠️ Note: If this is your first time installing pipx, close and reopen your terminal after running pipx ensurepath so your environment updates properly. And to verify python, pipx and pip is download run:
 
 ```bash:
-py --version
+python3 --version
 ```
 
 after running py --version run:
 
 ```bash:
-py -m pip --version
+pip --version
 ```
 
 after running py -m pip --version, run:
