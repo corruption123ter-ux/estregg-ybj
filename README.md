@@ -131,8 +131,10 @@ sudo service docker start
 ```bash:
 docker --version
 ```
-If it Works: it ill display a version number like Docker version 2x.x.x
+
+If it Works: It will display a version number like Docker version 2x.x.x
 if it has errors, try the entire process and restart your computer
+
 ---
 > Note: If you already have estregg-ybj installed and want to update to the latest version, run:
 
