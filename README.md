@@ -47,7 +47,7 @@ To run `estregg-ybj`, you need **Python 3** and **pipx** installed on your syste
 
 Choose the command block below that matches your operating system:
 
-#### Linux / Ubuntu / ChromeOS
+#### WSL Linux / Linux / Ubuntu / ChromeOS
 ```bash
 sudo apt update && sudo apt install -y python3 python3-pip pipx && pipx ensurepath
 ```
@@ -61,13 +61,18 @@ pipx ensurepath
 #### Windows (Command Prompt / PowerShell)
 Command Prompt:
 ```bash:
+winget install Python.Python.3.12 --accept-package-agreements --accept-source-agreements
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 py -m pip install --user pipx
 py -m pipx ensurepath
 ```
 
 Powershell:
 ```bash
-py -m pip install --user pipx; pipx ensurepath
+winget install Python.Python.3.12 --accept-package-agreements --accept-source-agreements
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+py -m pip install --user pipx
+py -m pipx ensurepath
 ```
 
 > ⚠️ **Note:** To run `estregg` on Windows, you must run `pip install windows-curses` in the Modern Windows Terminal first to prevent crashes.
@@ -86,7 +91,31 @@ pip install pipx
 pipx ensurepath
 ```
 
-> ⚠️ Note: If this is your first time installing pipx, close and reopen your terminal after running pipx ensurepath so your environment updates properly. 
+> ⚠️ Note: If this is your first time installing pipx, close and reopen your terminal after running pipx ensurepath so your environment updates properly. And to verify python, pipx and pip is download run:
+
+```bash:
+py --version
+```
+
+after running py --version run:
+
+```bash:
+py -m pip --version
+```
+
+after running py -m pip --version, run:
+
+```bash:
+pipx --version
+```
+
+to test run:
+
+```bash:
+pipx run cowsay Hello World!
+```
+
+---
 
 ### Step 2: Install estregg-ybj
 Install the package globally in an isolated environment using pipx:
@@ -94,6 +123,7 @@ Install the package globally in an isolated environment using pipx:
 ```bash:
 pipx install estregg-ybj
 ```
+
 Or use Docker
 
 ```bash:
