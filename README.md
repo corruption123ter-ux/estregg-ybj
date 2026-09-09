@@ -112,7 +112,7 @@ pipx --version
 to test run:
 
 ```bash:
-pipx run cowsay Hello World!
+pipx run cowsay -t "Hello World!"
 ```
 
 ---
