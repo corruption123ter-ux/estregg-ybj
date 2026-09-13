@@ -127,7 +127,7 @@ pipx install estregg-ybj
 Or use Docker
 
 ```bash:
-docker pull ghcr.io/corruption123ter-ux/estregg-ybj:v1.1.5
+docker pull ghcr.io/corruption123ter-ux/estregg-ybj:v1.1.7
 ```
 If you use Docker do these steps First:
 ---
@@ -194,7 +194,7 @@ estregg
 Or
 
 ```bash:
-docker run -it ghcr.io/corruption123ter-ux/estregg-ybj:v1.1.5
+docker run -it ghcr.io/corruption123ter-ux/estregg-ybj:v1.1.7
 ```
 
 > 💡 Note for Mobile Users: Because mobile screens lack arrow keys, it is highly recommended to use a physical Bluetooth keyboard, Otg Keyboards, Virtual keyboards or an app like **Hacker's Keyboard** to play.
