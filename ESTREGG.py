@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import sys, time, random, math, os, platform
+import sys, time, random, math, os, platform, json
 
 # Cleanly handle cross-platform curses import
 try:
@@ -15,6 +15,8 @@ except ImportError:
 
 # Cross-platform terminal clear command
 CLEAR_CMD = 'cls' if platform.system() == 'Windows' else 'clear'
+SAVE_FILE = "estregg_save.json"
+TOTAL_LEVELS = 100
 
 class ESTREGG:
 
@@ -34,17 +36,20 @@ class ESTREGG:
             try:
                 curses.start_color()
                 curses.use_default_colors()
-                curses.init_pair(1, curses.COLOR_CYAN, -1)     # Wormhole / A Button
-                curses.init_pair(2, curses.COLOR_RED, -1)      # Fire / B Button
-                curses.init_pair(3, curses.COLOR_GREEN, -1)    # Thrusters / Y Button
-                curses.init_pair(4, curses.COLOR_MAGENTA, -1)  # White Hole / X Button
+                curses.init_pair(1, curses.COLOR_CYAN, -1)     # Wormhole / A Button / START Box
+                curses.init_pair(2, curses.COLOR_RED, -1)      # Fire / B Button / NEW GAME Box
+                curses.init_pair(3, curses.COLOR_GREEN, -1)    # Thrusters / Y Button / Progress Bar
+                curses.init_pair(4, curses.COLOR_MAGENTA, -1)  # White Hole / X Button / PROGRESS Box
                 curses.init_pair(5, curses.COLOR_WHITE, -1)    # Rocket / D-Pad
-                curses.init_pair(6, curses.COLOR_YELLOW, -1)   # Stars
+                curses.init_pair(6, curses.COLOR_YELLOW, -1)   # Stars / Shining Text
                 curses.init_pair(7, curses.COLOR_CYAN, -1)     # Planets
             except curses.error:
                 pass
 
-        # ESTREGG - World State & Dynamic Galaxies
+        # Game Screens: 'TITLE', 'GAME', 'PROGRESS'
+        self.current_screen = 'TITLE'
+
+        # ESTREGG - World State & Dynamic Galaxies (1 to 100)
         self.galaxy_num = 1
         self.world_x, self.world_y = 30.0, 15.0
         self.cam_x, self.cam_y = 0.0, 0.0
@@ -56,6 +61,10 @@ class ESTREGG:
         self.manual_open = False
         self.star_info_open = False
         self.focused_star_details = None
+
+        # Easter Egg States
+        self.cmd_prompt_open = False
+        self.cmd_input = ""
 
         # Settings Options
         self.show_stars = True
@@ -76,6 +85,16 @@ class ESTREGG:
         # Stars & Physics Arrays
         self.stars = []
         self._generate_galaxy_content()
+        self.load_progress()
+
+    def get_progress_pct(self):
+        return min(100, int((self.galaxy_num / TOTAL_LEVELS) * 100))
+
+    def get_progress_bar_str(self, width=20):
+        pct = self.get_progress_pct()
+        filled = int(width * (pct / 100.0))
+        empty = width - filled
+        return f"[{'#' * filled}{' ' * empty}] {pct}%"
 
     def _generate_galaxy_content(self):
         planet_types = ['ring', 'gas', 'rock']
@@ -101,6 +120,44 @@ class ESTREGG:
         self.white_hole = {'x': -180, 'y': 100, 'name': 'Polaris Emitter'}
         self.stars = []
 
+    def save_progress(self):
+        data = {
+            'galaxy_num': self.galaxy_num,
+            'world_x': self.world_x,
+            'world_y': self.world_y,
+            'show_stars': self.show_stars,
+            'speed_multiplier': self.speed_multiplier
+        }
+        try:
+            with open(SAVE_FILE, 'w') as f:
+                json.dump(data, f)
+        except Exception:
+            pass
+
+    def load_progress(self):
+        if os.path.exists(SAVE_FILE):
+            try:
+                with open(SAVE_FILE, 'r') as f:
+                    data = json.load(f)
+                    self.galaxy_num = data.get('galaxy_num', 1)
+                    self.world_x = data.get('world_x', 30.0)
+                    self.world_y = data.get('world_y', 15.0)
+                    self.show_stars = data.get('show_stars', True)
+                    self.speed_multiplier = data.get('speed_multiplier', 1.0)
+                    self._generate_galaxy_content()
+            except Exception:
+                pass
+
+    def start_new_game(self):
+        self.galaxy_num = 1
+        self.world_x, self.world_y = 30.0, 15.0
+        self.cam_x, self.cam_y = 0.0, 0.0
+        self.autopilot = False
+        self.is_landed = False
+        self._generate_galaxy_content()
+        self.save_progress()
+        self.current_screen = 'GAME'
+
     def _safe_addstr(self, y, x, text, attr=curses.A_NORMAL):
         h, w = self.scr.getmaxyx()
         if 0 <= y < h:
@@ -118,7 +175,6 @@ class ESTREGG:
     def _init_stars(self, h, w):
         if not self.stars:
             star_classes = ['Class O (Blue)', 'Class B (Blue-White)', 'Class A (White)', 'Class F (Yellow-White)', 'Class G (Solar)', 'Class M (Red Dwarf)']
-            # Platform safe ASCII chars to prevent encoding crashes on minimal terminals
             safe_star_chars = ['.', '*', '+', 'o', 'x']
             for _ in range(4000):
                 self.stars.append({
@@ -129,6 +185,26 @@ class ESTREGG:
                     'radius': round(random.uniform(0.5, 12.5), 2),
                     'mass': round(random.uniform(0.1, 25.0), 2)
                 })
+
+    def _draw_background_stars(self, h, w):
+        self._init_stars(h, w)
+        for star in self.stars[:120]:
+            sx = (star['x'] + 1500) % w
+            sy = (star['y'] + 1500) % h
+            self._safe_addstr(sy, sx, star['char'], curses.color_pair(6) | curses.A_DIM)
+
+    def trigger_level_advance(self):
+        if self.galaxy_num >= TOTAL_LEVELS:
+            self.save_progress()
+            self.trigger_trophy_win_animation()
+            self.current_screen = 'TITLE'
+        else:
+            self.trigger_wormhole_animation()
+            self.galaxy_num += 1
+            self._generate_galaxy_content()
+            self.world_x, self.world_y = 0.0, 0.0
+            self.cam_x, self.cam_y = 0.0, 0.0
+            self.save_progress()
 
     def trigger_wormhole_animation(self):
         h, w = self.scr.getmaxyx()
@@ -148,11 +224,6 @@ class ESTREGG:
             self.scr.refresh()
             time.sleep(0.04)
 
-        self.galaxy_num += 1
-        self._generate_galaxy_content()
-        self.world_x, self.world_y = 0.0, 0.0
-        self.cam_x, self.cam_y = 0.0, 0.0
-
         for step in range(25):
             self.scr.erase()
             radius = step * 2
@@ -161,9 +232,94 @@ class ESTREGG:
                 ex = int(center_x + math.cos(rad) * radius)
                 ey = int(center_y + math.sin(rad) * (radius / 2))
                 self._safe_addstr(ey, ex, "@", curses.color_pair(4) | curses.A_BOLD)
-            self._safe_addstr(center_y, center_x - 17, f"ESTREGG: ARRIVED IN GALAXY #{self.galaxy_num}", curses.color_pair(3) | curses.A_BOLD)
+            self._safe_addstr(center_y, center_x - 17, f"ESTREGG: ARRIVED IN LEVEL #{self.galaxy_num}", curses.color_pair(3) | curses.A_BOLD)
             self.scr.refresh()
             time.sleep(0.03)
+
+    def trigger_last_level_sequence(self):
+        self.galaxy_num = TOTAL_LEVELS
+        self._generate_galaxy_content()
+        self.world_x, self.world_y = 0.0, 0.0
+        self.cam_x, self.cam_y = 0.0, 0.0
+
+    def trigger_trophy_win_animation(self):
+        h, w = self.scr.getmaxyx()
+        cx = w // 2
+        start_time = time.time()
+        
+        while time.time() - start_time < 10.0:
+            self.scr.erase()
+            elapsed = time.time() - start_time
+            prog = min(1.0, elapsed / 4.0)
+
+            for _ in range(30):
+                self._safe_addstr(random.randint(0, h-1), random.randint(0, w-2), "*", curses.color_pair(6) | curses.A_DIM)
+
+            ry = h // 2 + 2
+            self._safe_addstr(ry - 1, cx - 2, " /\\ ", curses.color_pair(5) | curses.A_BOLD)
+            self._safe_addstr(ry,     cx - 2, "|==|", curses.color_pair(5) | curses.A_BOLD)
+            self._safe_addstr(ry + 1, cx - 2, "/\"\"\\", curses.color_pair(5) | curses.A_BOLD)
+
+            trophy_y = int(prog * (ry - 2))
+            trophy_attr = curses.color_pair(6) | curses.A_BOLD | (curses.A_BLINK if int(elapsed * 8) % 2 == 0 else 0)
+            self._safe_addstr(trophy_y, cx - 2, "🏆", trophy_attr)
+
+            if prog >= 0.9:
+                for _ in range(40):
+                    conf_char = random.choice(["*", "o", "+", "x", "@", "#"])
+                    conf_color = random.choice([1, 2, 3, 4, 6])
+                    self._safe_addstr(random.randint(0, h-1), random.randint(0, w-2), conf_char, curses.color_pair(conf_color) | curses.A_BOLD)
+
+                win_attr = curses.color_pair(6) | curses.A_BOLD | (curses.A_REVERSE if int(elapsed * 10) % 2 == 0 else 0)
+                self._safe_addstr(ry - 5, cx - 18, "✨ YOU COMPLETED ALL 100 LEVELS! ✨", win_attr)
+
+            float_y = int((h // 2 + 6) + math.sin(elapsed * 3) * 2)
+            save_msg = "💾 DON'T FORGET TO SAVE YOUR GAME WITH Ctrl + Shift + S !"
+            save_attr = curses.color_pair(1) | curses.A_BOLD | (curses.A_BLINK if int(elapsed * 4) % 2 == 0 else 0)
+            self._safe_addstr(float_y, cx - len(save_msg) // 2, save_msg, save_attr)
+
+            self.scr.refresh()
+            time.sleep(0.05)
+
+    def trigger_jeorgie_animation(self):
+        h, w = self.scr.getmaxyx()
+        center_x = w // 2
+        start_time = time.time()
+        
+        ship_art = [
+            "     /\\     ",
+            "    /  \\    ",
+            "   | JE |   ",
+            "  /| OR |\\  ",
+            " | | GI | | ",
+            " |_| E! |_| ",
+            "    / || \\   ",
+            "   /  ||  \\  "
+        ]
+        
+        while time.time() - start_time < 10.0:
+            self.scr.erase()
+            elapsed = time.time() - start_time
+            progress = elapsed / 10.0
+            
+            ship_y = int((h + len(ship_art)) * (1.0 - progress)) - len(ship_art)
+            
+            for _ in range(40):
+                sx = random.randint(0, max(1, w - 2))
+                sy = random.randint(0, max(1, h - 1))
+                self._safe_addstr(sy, sx, ".", curses.color_pair(6) | curses.A_DIM)
+
+            for idx, line in enumerate(ship_art):
+                ly = ship_y + idx
+                lx = center_x - len(line) // 2
+                self._safe_addstr(ly, lx, line, curses.color_pair(5) | curses.A_BOLD)
+            
+            flame = random.choice(["  (  (  )  )  ", "   )  )  (   ", "  || || || || "])
+            self._safe_addstr(ship_y + len(ship_art), center_x - len(flame) // 2, flame, curses.color_pair(2) | curses.A_BOLD)
+            
+            self._safe_addstr(h - 2, 2, f"🚀 LAUNCHING JEORGIE... [{10 - int(elapsed)}s]", curses.color_pair(3) | curses.A_BOLD)
+            self.scr.refresh()
+            time.sleep(0.05)
 
     def _get_target_planet(self):
         unflagged = [p for p in self.planets if not p['flagged']]
@@ -182,7 +338,7 @@ class ESTREGG:
                 self.world_x -= math.cos(angle) * 2.5
                 self.world_y -= math.sin(angle) * 2.5
 
-        wh_dist = math.hypot(self.white_hole['x'] - self.world_x, self.white_hole['y'] - self.world_y)
+        wh_dist = math.hypot(self.white_hole['x'] - self.world_x, self.white_hole['y'] - self.world_x)
         if wh_dist < 35:
             angle = math.atan2(self.world_y - self.white_hole['y'], self.world_x - self.white_hole['x'])
             self.world_x += math.cos(angle) * 1.8
@@ -213,11 +369,87 @@ class ESTREGG:
         self.focused_star_details = nearest
         self.star_info_open = not self.star_info_open
 
+    def draw_title_screen(self):
+        self.scr.erase()
+        h, w = self.scr.getmaxyx()
+        cx = w // 2
+
+        self._draw_background_stars(h, w)
+
+        title_art = [
+            "  EEEEE   SSSS   TTTTT  RRRR    EEEEE   GGGG   GGGG  ",
+            "  E      S         T    R   R   E      G      G      ",
+            "  EEE     SSS      T    RRRR    EEE    G  GG  G  GG  ",
+            "  E          S     T    R  R    E      G   G  G   G  ",
+            "  EEEEE  SSSS      T    R   R   EEEEE   GGGG   GGGG  "
+        ]
+
+        shine_attr = curses.color_pair(6) | curses.A_BOLD | (curses.A_BLINK if int(time.time() * 4) % 2 == 0 else 0)
+
+        top_y = max(1, (h - 25) // 2)
+        for idx, line in enumerate(title_art):
+            self._safe_addstr(top_y + idx, cx - len(line) // 2, line, shine_attr)
+
+        by = top_y + len(title_art) + 1
+        subtext = "MADE BY YB-Jeorgie"
+        self._safe_addstr(by, cx - len(subtext) // 2, subtext, curses.color_pair(5) | curses.A_BOLD)
+
+        box_w = 42
+        bx = cx - box_w // 2
+
+        # START Box
+        by += 2
+        self._safe_addstr(by,     bx, "╔" + "═"*(box_w-2) + "╗", curses.color_pair(1))
+        self._safe_addstr(by + 1, bx, "║" + " "*((box_w-2-5)//2) + "START" + " "*((box_w-2-5)//2 + (box_w-2-5)%2) + "║", curses.color_pair(1) | curses.A_BOLD)
+        self._safe_addstr(by + 2, bx, "║" + " "*((box_w-2-7)//2) + "PRESS S" + " "*((box_w-2-7)//2 + (box_w-2-7)%2) + "║", curses.color_pair(1))
+        self._safe_addstr(by + 3, bx, "╚" + "═"*(box_w-2) + "╝", curses.color_pair(1))
+
+        # PROGRESS Box
+        by += 5
+        p_bar = self.get_progress_bar_str(20)
+        p_lbl = f"LEVEL #{self.galaxy_num} / {TOTAL_LEVELS}"
+        
+        self._safe_addstr(by,     bx, "╔" + "═"*(box_w-2) + "╗", curses.color_pair(4))
+        self._safe_addstr(by + 1, bx, "║" + " "*((box_w-2-8)//2) + "PROGRESS" + " "*((box_w-2-8)//2 + (box_w-2-8)%2) + "║", curses.color_pair(4) | curses.A_BOLD)
+        self._safe_addstr(by + 2, bx, "║" + " "*((box_w-2-len(p_lbl))//2) + p_lbl + " "*((box_w-2-len(p_lbl))//2 + (box_w-2-len(p_lbl))%2) + "║", curses.color_pair(3) | curses.A_BOLD)
+        self._safe_addstr(by + 3, bx, "║" + " "*((box_w-2-len(p_bar))//2) + p_bar + " "*((box_w-2-len(p_bar))//2 + (box_w-2-len(p_bar))%2) + "║", curses.color_pair(3))
+        self._safe_addstr(by + 4, bx, "║" + " "*((box_w-2-11)//2) + "PRESS V + P" + " "*((box_w-2-11)//2 + (box_w-2-11)%2) + "║", curses.color_pair(4))
+        self._safe_addstr(by + 5, bx, "╚" + "═"*(box_w-2) + "╝", curses.color_pair(4))
+
+        # NEW GAME Box
+        by += 7
+        self._safe_addstr(by,     bx, "╔" + "═"*(box_w-2) + "╗", curses.color_pair(2))
+        self._safe_addstr(by + 1, bx, "║" + " "*((box_w-2-8)//2) + "NEW GAME" + " "*((box_w-2-8)//2 + (box_w-2-8)%2) + "║", curses.color_pair(2) | curses.A_BOLD)
+        self._safe_addstr(by + 2, bx, "║" + " "*((box_w-2-7)//2) + "PRESS N" + " "*((box_w-2-7)//2 + (box_w-2-7)%2) + "║", curses.color_pair(2))
+        self._safe_addstr(by + 3, bx, "╚" + "═"*(box_w-2) + "╝", curses.color_pair(2))
+
+        self.scr.refresh()
+
+    def draw_progress_screen(self):
+        self.scr.erase()
+        h, w = self.scr.getmaxyx()
+        cx = w // 2
+
+        self._draw_background_stars(h, w)
+
+        self._safe_addstr(2, cx - 12, "=== SAVED PROGRESS ===", curses.color_pair(6) | curses.A_BOLD)
+        self._safe_addstr(5, cx - 18, f"Current Level: #{self.galaxy_num} / {TOTAL_LEVELS}", curses.color_pair(5))
+        self._safe_addstr(6, cx - 18, f"Coordinates: ({self.world_x:.1f}, {self.world_y:.1f})", curses.color_pair(5))
+        self._safe_addstr(8, cx - 18, f"Progress Bar: {self.get_progress_bar_str(20)}", curses.color_pair(3) | curses.A_BOLD)
+        self._safe_addstr(12, cx - 18, "Press 'Q' or 'Esc' to Return to Title", curses.A_REVERSE)
+        self.scr.refresh()
+
     def draw(self):
+        if self.current_screen == 'TITLE':
+            self.draw_title_screen()
+            return
+        elif self.current_screen == 'PROGRESS':
+            self.draw_progress_screen()
+            return
+
         self.scr.erase()
         h, w = self.scr.getmaxyx()
 
-        # Terminal minimum size check to prevent crashes
         if h < 10 or w < 30:
             self._safe_addstr(0, 0, "Terminal too small!")
             self.scr.refresh()
@@ -259,7 +491,7 @@ class ESTREGG:
         for p in self.planets:
             self._draw_planet(p, h, w)
 
-        self._safe_addstr(1, 2, f"--- ESTREGG GALAXY SECTOR #{self.galaxy_num} ---", curses.color_pair(5))
+        self._safe_addstr(1, 2, f"--- ESTREGG LEVEL #{self.galaxy_num} / {TOTAL_LEVELS} ---", curses.color_pair(5))
         zoom_txt = f"{int(self.zoom * 100)}%"
         flagged_cnt = sum(1 for p in self.planets if p['flagged'])
         self._safe_addstr(2, 2, f"[AUTO: {'ON' if self.autopilot else 'OFF'}] [ZOOM: {zoom_txt}] [FLAGS: {flagged_cnt}/10]", curses.color_pair(1) if self.autopilot else curses.color_pair(5))
@@ -325,7 +557,7 @@ class ESTREGG:
             mw, mh = min(56, w - 2), min(14, h - 2)
             mx, my = (w - mw) // 2, (h - mh) // 2
             for y in range(mh): self._safe_addstr(my + y, mx, " " * mw, curses.A_REVERSE)
-            self._safe_addstr(my + 1, mx + 2, f"=== ESTREGG PLANETS (GALAXY #{self.galaxy_num}) ===", curses.A_REVERSE | curses.A_BOLD)
+            self._safe_addstr(my + 1, mx + 2, f"=== ESTREGG PLANETS (LEVEL #{self.galaxy_num}) ===", curses.A_REVERSE | curses.A_BOLD)
             flagged_cnt = sum(1 for p in self.planets if p['flagged'])
             self._safe_addstr(my + 3, mx + 2, f"Progress: {flagged_cnt} / 10 Planets Flagged", curses.A_REVERSE | curses.A_BOLD)
             for idx, p in enumerate(self.planets):
@@ -333,7 +565,7 @@ class ESTREGG:
                     status = "[FLAGGED]" if p['flagged'] else "[UNFLAGGED]"
                     self._safe_addstr(my + 4 + idx, mx + 2, f"{p['name']} : {status}", curses.A_REVERSE)
             if flagged_cnt == 10:
-                self._safe_addstr(my + mh - 2, mx + 2, "ALL FLAGS COLLECTED! PRESS 'A' FOR WORMHOLE!", curses.A_REVERSE | curses.color_pair(1) | curses.A_BOLD)
+                self._safe_addstr(my + mh - 2, mx + 2, "ALL FLAGS COLLECTED! PRESS 'A' FOR VICTORY!", curses.A_REVERSE | curses.color_pair(1) | curses.A_BOLD)
 
         if self.settings_open:
             mw, mh = min(50, w - 2), min(8, h - 2)
@@ -352,6 +584,24 @@ class ESTREGG:
             self._safe_addstr(my + 3, mx + 2, f"Spectral Class: {s['class']}", curses.A_REVERSE)
             self._safe_addstr(my + 4, mx + 2, f"Solar Radius  : {s['radius']} R_sun", curses.A_REVERSE)
             self._safe_addstr(my + 5, mx + 2, f"Solar Mass    : {s['mass']} M_sun", curses.A_REVERSE)
+
+        if self.manual_open:
+            mw, mh = min(54, w - 2), min(12, h - 2)
+            mx, my = (w - mw) // 2, (h - mh) // 2
+            for y in range(mh): self._safe_addstr(my + y, mx, " " * mw, curses.A_REVERSE)
+            self._safe_addstr(my + 1, mx + 2, "=== ESTREGG MANUAL ===", curses.A_REVERSE | curses.A_BOLD)
+            self._safe_addstr(my + 3, mx + 2, "Arrow Keys : Navigate Rocket", curses.A_REVERSE)
+            self._safe_addstr(my + 4, mx + 2, "A / I / B / X / Y / R / 3 : Game Controls", curses.A_REVERSE)
+            self._safe_addstr(my + 5, mx + 2, "Ctrl + E   : Command Prompt", curses.A_REVERSE)
+            self._safe_addstr(my + 6, mx + 2, "0, esc, q   : Exit Command Prompt/Manual", curses.A_REVERSE)
+            self._safe_addstr(my + 8, mx + 2, "Press 0, esc, or q to close manual", curses.A_REVERSE | curses.A_BOLD)
+
+        if self.cmd_prompt_open:
+            mw, mh = min(50, w - 2), 5
+            mx, my = (w - mw) // 2, h - 7
+            for y in range(mh): self._safe_addstr(my + y, mx, " " * mw, curses.A_REVERSE)
+            self._safe_addstr(my + 1, mx + 2, "=== ESTREGG COMMAND PROMPT ===", curses.A_REVERSE | curses.A_BOLD)
+            self._safe_addstr(my + 3, mx + 2, f"> {self.cmd_input}_", curses.A_REVERSE)
 
         self.scr.refresh()
 
@@ -409,9 +659,63 @@ class ESTREGG:
             self.last_input_source = "Keyboard"
             self.last_pressed_key = f"Keycode {key} ({chr(key) if 32 <= key <= 126 else 'Special'})"
 
-        # Ctrl + B (ASCII 2), Tab (9), or 'q' exits cleanly
-        if key in [2, 9, ord('q'), ord('Q')]:
-            return False
+        if self.current_screen == 'TITLE':
+            if key in [ord('s'), ord('S')]:
+                self.current_screen = 'GAME'
+            elif key in [ord('v'), ord('V'), ord('p'), ord('P')]:
+                self.current_screen = 'PROGRESS'
+            elif key in [ord('n'), ord('N')]:
+                self.start_new_game()
+            elif key in [27, ord('q'), ord('Q')]:
+                return False
+            return True
+
+        if self.current_screen == 'PROGRESS':
+            if key in [27, ord('q'), ord('Q')]:
+                self.current_screen = 'TITLE'
+            return True
+
+        if key == 19:  # Ctrl + S
+            self.save_progress()
+            return True
+
+        if (self.cmd_prompt_open or self.manual_open) and key in [ord('0'), 27, ord('q'), ord('Q')]:
+            self.cmd_prompt_open = False
+            self.manual_open = False
+            self.cmd_input = ""
+            return True
+
+        if self.cmd_prompt_open:
+            if key in [10, 13]:
+                cmd = self.cmd_input.strip()
+                if cmd.lower() == "jeorgie":
+                    self.cmd_prompt_open = False
+                    self.cmd_input = ""
+                    self.trigger_jeorgie_animation()
+                elif cmd.lower() == "last level":
+                    self.cmd_prompt_open = False
+                    self.cmd_input = ""
+                    self.trigger_last_level_sequence()
+                elif cmd.lower() == "help":
+                    self.cmd_prompt_open = False
+                    self.cmd_input = ""
+                    self.manual_open = True
+                else:
+                    self.cmd_input = ""
+            elif key in [8, 127, curses.KEY_BACKSPACE]:
+                self.cmd_input = self.cmd_input[:-1]
+            elif 32 <= key <= 126:
+                self.cmd_input += chr(key)
+            return True
+
+        if key == 5:  # Ctrl + E
+            self.cmd_prompt_open = True
+            self.cmd_input = ""
+            return True
+
+        if key in [ord('q'), ord('Q')]:
+            self.current_screen = 'TITLE'
+            return True
 
         if key == curses.KEY_UP: self.process_movement('UP')
         elif key == curses.KEY_DOWN: self.process_movement('DOWN')
@@ -421,7 +725,7 @@ class ESTREGG:
         if key in [ord('a'), ord('A')]: 
             self.action_state['A'] = True
             if sum(1 for p in self.planets if p['flagged']) == 10:
-                self.trigger_wormhole_animation()
+                self.trigger_level_advance()
             else:
                 self.autopilot = not self.autopilot
         elif key in [ord('i'), ord('I')]: 
@@ -429,7 +733,6 @@ class ESTREGG:
         elif key in [ord('b'), ord('B')]: 
             self.process_movement('RIGHT', step=0.4)
             self.action_state['B'] = True
-            
         elif key in [ord('x'), ord('X')]: 
             self.process_movement('LEFT', step=0.4)
             self.action_state['X'] = True
@@ -449,8 +752,9 @@ class ESTREGG:
 
     def run(self):
         while True:
-            self._apply_space_physics()
-            self.update_autopilot()
+            if self.current_screen == 'GAME':
+                self._apply_space_physics()
+                self.update_autopilot()
             self.draw()
             if not self.handle_input():
                 break
