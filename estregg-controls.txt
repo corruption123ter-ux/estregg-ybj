@@ -1,13 +1,32 @@
-# Controls of ESTREGG!
+==================================================
+              🚀 ESTREGG MANUAL 🚀
+==================================================
 
-A- Auto
-B- Nudge Left
-X- Nudge Right
-Y- Nudge Up
-I- Planets flagged
-3- Setting
-ctrl + b- Exit game
+  [ CONTROLS ]
+  ----------------------------------------------
+  Arrow Keys   : Manual Flight & Navigation
+  A            : Autopilot Toggle / Jump Galaxy
+  B            : Nudge Right (Precision Thrust)
+  X            : Nudge Left (Precision Thrust)
+  Y            : Nudge Up (Precision Thrust)
 
-> note this is a manual how to use and control the ship your playing so remember this
+  [ SYSTEM SET ]
+  ----------------------------------------------
+  I            : Flagged Planets & System Progress
+  R            : Inspect Nearest Star Class (R3)
+  3            : Open Game Settings Menu
 
-Thanks for reading and have a good day!
+  [ TERMINAL & SYSTEM EXIT ]
+  ----------------------------------------------
+  Ctrl + E     : Open Secret In-Game Command Prompt
+  Ctrl + S     : Quick-Save Game Progress
+  Ctrl + B / Q : Exit Game Immediately
+  0 / Esc / Q  : Close Current Overlay Menu
+
+==================================================
+ > NOTE: This manual outlines the flight systems
+   and navigation controls for your ship. Keep
+   these key bindings in mind during exploration!
+==================================================
+
+   Thankie and have a Good day
