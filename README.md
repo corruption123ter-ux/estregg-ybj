@@ -39,6 +39,19 @@
 
 ---
 
+## 🔥 Major Updates & Patch Notes
+
+### 🌌 Version 1.1.8 — A Huge Massive Update!
+
+* **100 Dynamic Levels Added:** Traverse through 100 uniquely generated star systems filled with dynamic wormholes, black holes, and planetary systems.
+* **Title Banner ASCII Fix:** Resolved character distortion bugs on custom terminal fonts where `"ESTREGG"` rendered as `"ESTAEGG"`. Title art is now crisp and universally aligned.
+* **Secret Command Console (`Ctrl + E`):** Integrated an in-game secret terminal! Try commands like `jeorgie`, `last level`, and `help`.
+* **Level Progression & Victory Cutscenes:** Reaching Level 100 triggers the grand animated trophy sequence, alongside high-speed hyper-portal wormhole warp transitions.
+* **Interactive Star Scanner:** Inspect deep-space solar systems by pressing `R` (R3) to reveal stellar classes, solar masses, and radius data.
+* **Cross-Platform Curses Engine:** Refactored runtime hooks to ensure smooth execution on Windows, macOS, Termux, and Docker containers without crashes.
+
+---
+
 ## 🛠️ Requirements & Installation
 
 To run `estregg-ybj`, you need **Python 3** and **pipx** installed on your system.
