@@ -20,7 +20,7 @@
   ----------------------------------------------
   Ctrl + E     : Open Secret In-Game Command Prompt
   Ctrl + S     : Quick-Save Game Progress
-  Ctrl + B / Q : Exit Game Immediately
+  Esc / Q      : Exit Game Immediately
   0 / Esc / Q  : Close Current Overlay Menu
 
 ==================================================
