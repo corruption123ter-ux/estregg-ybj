@@ -1,6 +1,7 @@
 <p align="center">
-<img width="1365" height="767" alt="Screenshot 2026-09-19 3 43 54 PM" src="https://github.com/user-attachments/assets/ef56c6c3-e6cc-4e14-ab0d-c2217446cd5b" />
+<img width="1365" height="679" alt="Estregg" src="https://github.com/user-attachments/assets/93175261-8ade-487b-869a-a813b5b66077" />
 </p>
+
 
 <p align="center">
   <img width="240" height="260" alt="Image" src="https://github.com/user-attachments/assets/e81e3b72-0ba0-418b-9fce-1dc855e2bf53" />
