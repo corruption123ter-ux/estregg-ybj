@@ -47,6 +47,7 @@
 * **Level Progression & Victory Cutscenes:** Reaching Level 100 triggers the grand animated trophy sequence, alongside high-speed hyper-portal wormhole warp transitions.
 * **Interactive Star Scanner:** Inspect deep-space solar systems by pressing `R` (R3) to reveal stellar classes, solar masses, and radius data.
 * **Cross-Platform Curses Engine:** Refactored runtime hooks to ensure smooth execution on Windows, macOS, Termux, and Docker containers without crashes.
+* **Added A Title Screen For Estregg:** Added a Title screen and some settings you would like to see, not just to be directed to the game directly
 
 ---
 
